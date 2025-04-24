@@ -193,8 +193,8 @@ beauty rating, which would be more interesting to know.
 > how much of the variation in evaluation scores is explained by beauty
 > ratings?
 
-The adjusted R-squared in this model is .03. It indicates that beauty
-ratings explain 3% of variation in evaluation scores.
+The R-squared in this model indicates that beauty ratings explain 3.50%
+of variation in evaluation scores.
 
 # Part 3: Linear regression with a categorical predictor
 
@@ -368,8 +368,8 @@ professors, on average, have an evaluation score .02 points lower than
 tenure track professors (but this is not statistically significant, so
 we would say that they is no significant difference).
 
-The adjusted R-squared indicates that differences in professors’ rank
-explains only 0.1% of variance in evaluation scores.
+The R-squared indicates that differences in professors’ rank explains
+only 1.16% of variance in evaluation scores.
 
 ## Exercise 14
 
@@ -427,5 +427,5 @@ track or tenured professors) have, on average, an evaluation score .14
 points lower than teaching professors (this difference is statistically
 significant).
 
-The adjusted R-squared indicates that whether a professor is tenure
-eligible or not explains 0.9% of variance in evalutation scores.
+The R-squared indicates that whether a professor is tenure eligible or
+not explains 1.15% of variance in evalutation scores.

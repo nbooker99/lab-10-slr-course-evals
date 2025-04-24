@@ -111,7 +111,7 @@ The intercept in this model, 3.89,  represents the predicted average professor e
 
 > What is the R-squared value of this model? Interpret it in context: how much of the variation in evaluation scores is explained by beauty ratings?
 
-The adjusted R-squared in this model is .03. It indicates that beauty ratings explain 3% of variation in evaluation scores.
+The R-squared in this model indicates that beauty ratings explain 3.50% of variation in evaluation scores.
 
 # Part 3: Linear regression with a categorical predictor
 
@@ -175,7 +175,7 @@ score = 4.15 + .13 x rank_teaching + -.02 x rank_tenured + error
 
 The intercept of this model, 4.15, indicates the average evaluation score for tenure track professors. The slopes indicate that teaching professors, on average, have an evaluation score .13 points higher than tenure track professors (marginally significant) and that tenured professors, on average, have an evaluation score .02 points lower than tenure track professors (but this is not statistically significant, so we would say that they is no significant difference).
 
-The adjusted R-squared indicates that differences in professors' rank explains only 0.1% of variance in evaluation scores.
+The R-squared indicates that differences in professors' rank explains only 1.16% of variance in evaluation scores.
 
 ## Exercise 14
 
@@ -202,4 +202,4 @@ score = 4.28 + -0.14 x tenure_eligible_yes + error
 
 The slope of this model, 4.28, represents the average evaluation score for professors who are not eligible for tenure (teaching professors). The slope indicates that professors who are eligible for tenure (tenure track or tenured professors) have, on average, an evaluation score .14 points lower than teaching professors (this difference is statistically significant).
 
-The adjusted R-squared indicates that whether a professor is tenure eligible or not explains 0.9% of variance in evalutation scores.
+The R-squared indicates that whether a professor is tenure eligible or not explains 1.15% of variance in evalutation scores.
