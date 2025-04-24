@@ -136,7 +136,7 @@ linear_reg() %>%
 Based on the results of the regression analysis the model predicting
 average professor evulation scores from average beauty rating is:
 
-score_predicted = 3.89 + .07 x bty_avg + error
+score = 3.89 + .07 x bty_avg + error
 
 ## Exercise 5
 
@@ -189,11 +189,11 @@ beauty rating, which would be more interesting to know.
 
 ## Exercise 8
 
-> What is the Rsquared value of this model? Interpret it in context: how
-> much of the variation in evaluation scores is explained by beauty
+> What is the R-squared value of this model? Interpret it in context:
+> how much of the variation in evaluation scores is explained by beauty
 > ratings?
 
-The adjusted Rsquared in this model is .03. It indicates that beauty
+The adjusted R-squared in this model is .03. It indicates that beauty
 ratings explain 3% of variation in evaluation scores.
 
 # Part 3: Linear regression with a categorical predictor
@@ -255,8 +255,8 @@ evaluation scores .14 points higher than female professors on average.
 > What is the equation of the line corresponding to male professors?
 > What is it for female professors?
 
-male professors: score_predicted = 4.09 + .14 x gendermale + error
-female professors: score_predicted = 4.23 + -.14 x genderfemale + error
+male professors: score = 4.09 + .14 x gendermale + error female
+professors: score = 4.23 + -.14 x genderfemale + error
 
 ## Exercise 11
 
@@ -299,15 +299,14 @@ contrasts(evals$rank)
     ## tenure track            1       0
     ## tenured                 0       1
 
-score_predicted = 4.28 + -0.13 x rank_tenure_track + -0.15 x
-rank_tenured
+score = 4.28 + -0.13 x rank_tenure_track + -0.15 x rank_tenured
 
 Because teaching professors are the reference category, the intercept of
 the model, 4.28, represents the average evaluations score for teaching
 professors. The slopes indicate that tenure track professors, on
 average, get evaluation scores .13 points lower than teaching professors
-and that tenured professors, on average, get evaluation scores .15
-points lower than teaching professors.
+(marginally significant) and that tenured professors, on average, get
+evaluation scores .15 points lower than teaching professors.
 
 ## Exercise 12
 
@@ -324,3 +323,109 @@ contrasts(evals$rank_relevel)
     ## tenure track        0       0
     ## teaching            1       0
     ## tenured             0       1
+
+## Exercise 13
+
+> Fit a new linear model called m_rank_relevel to predict average
+> professor evaluation score based on rank_relevel of the professor.
+> This is the new (releveled) variable you created in the previous
+> exercise. Based on the regression output, write the linear model and
+> interpret the slopes and intercept in context of the data. Also
+> determine and interpret the R-squared of the model.
+
+``` r
+m_rank_relevel <- summary(lm(score ~ rank_relevel, data = evals))
+m_rank_relevel
+```
+
+    ## 
+    ## Call:
+    ## lm(formula = score ~ rank_relevel, data = evals)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -1.8546 -0.3391  0.1157  0.4305  0.8609 
+    ## 
+    ## Coefficients:
+    ##                      Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)           4.15463    0.05214  79.680   <2e-16 ***
+    ## rank_relevelteaching  0.12968    0.07482   1.733   0.0837 .  
+    ## rank_releveltenured  -0.01550    0.06228  -0.249   0.8036    
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 0.5419 on 460 degrees of freedom
+    ## Multiple R-squared:  0.01163,    Adjusted R-squared:  0.007332 
+    ## F-statistic: 2.706 on 2 and 460 DF,  p-value: 0.06786
+
+score = 4.15 + .13 x rank_teaching + -.02 x rank_tenured + error
+
+The intercept of this model, 4.15, indicates the average evaluation
+score for tenure track professors. The slopes indicate that teaching
+professors, on average, have an evaluation score .13 points higher than
+tenure track professors (marginally significant) and that tenured
+professors, on average, have an evaluation score .02 points lower than
+tenure track professors (but this is not statistically significant, so
+we would say that they is no significant difference).
+
+The adjusted R-squared indicates that differences in professors’ rank
+explains only 0.1% of variance in evaluation scores.
+
+## Exercise 14
+
+> Create another new variable called tenure_eligible that labels
+> “teaching” faculty as “no” and labels “tenure track” and “tenured”
+> faculty as “yes”.
+
+``` r
+evals <- evals %>% 
+  mutate(tenure_eligible = case_when(
+    rank == "teaching" ~ "no",
+    rank %in% c("tenure track", "tenured") ~ "yes"
+  ))
+```
+
+## Exercise 15
+
+> Fit a new linear model called m_tenure_eligible to predict average
+> professor evaluation score based on tenure_eligibleness of the
+> professor. This is the new (regrouped) variable you created in
+> Exercise 15. Based on the regression output, write the linear model
+> and interpret the slopes and intercept in context of the data. Also
+> determine and interpret the R-squared of the model.
+
+``` r
+m_tenure_eligible <- summary(lm(score ~ tenure_eligible, data = evals))
+m_tenure_eligible
+```
+
+    ## 
+    ## Call:
+    ## lm(formula = score ~ tenure_eligible, data = evals)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -1.8438 -0.3438  0.1157  0.4360  0.8562 
+    ## 
+    ## Coefficients:
+    ##                    Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)          4.2843     0.0536  79.934   <2e-16 ***
+    ## tenure_eligibleyes  -0.1406     0.0607  -2.315    0.021 *  
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 0.5413 on 461 degrees of freedom
+    ## Multiple R-squared:  0.0115, Adjusted R-squared:  0.009352 
+    ## F-statistic: 5.361 on 1 and 461 DF,  p-value: 0.02103
+
+score = 4.28 + -0.14 x tenure_eligible_yes + error
+
+The slope of this model, 4.28, represents the average evaluation score
+for professors who are not eligible for tenure (teaching professors).
+The slope indicates that professors who are eligible for tenure (tenure
+track or tenured professors) have, on average, an evaluation score .14
+points lower than teaching professors (this difference is statistically
+significant).
+
+The adjusted R-squared indicates that whether a professor is tenure
+eligible or not explains 0.9% of variance in evalutation scores.
